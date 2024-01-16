@@ -7,7 +7,7 @@ mongo_uri = os.getenv('MONGO_URI')
 
 from pymongo import MongoClient
 
-client = MongoClient("mongodb+srv://sparta:jungle@cluster0.oxcto9l.mongodb.net/?retryWrites=true&w=majority")
+client = MongoClient(mongo_uri)
 db = client.db_jungle
 
 from flask import Flask, render_template, jsonify, request
