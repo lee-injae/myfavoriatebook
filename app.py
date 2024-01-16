@@ -22,17 +22,25 @@ def home():
 def show_books():
     all_books = list(db.books.find({},{"_id": False}).sort("like", -1))
     return jsonify({
-        "result": "succcess", 
+        "result": "success", 
         "all_books": all_books
-        })
+    })
 
 @app.route("/api/books/like", methods=['POST'])
 def like_book():
-    return jsonify({"result": "succcess", "msg": "like 연결되었습니다"})
+    data = request.json
+    title_receive = data.get("title_give")
+    book = db.books.find_one({"title": title_receive})
+    new_like = book["like"] + 1
+    db.books.update_one({"title": title_receive}, {"$set" : {"like": new_like}})    
+    return jsonify({"result": "success", "msg": "liked!"})
 
 @app.route("/api/books/delete", methods=['POST'])
 def delete_book():
-    return jsonify({"result": "succcess", "msg": "delete 연결되었습니다"})
+    data = request.json
+    title_receive = data.get("title_give")
+    db.books.delete_one({"title": title_receive})
+    return jsonify({"result": "success", "msg": "deleted!"})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
