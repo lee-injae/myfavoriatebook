@@ -113,11 +113,10 @@
 
             async function deleteBook(title) {
                 let entry = {title_give: title}
-                console.log(entry)
                 
                 try {
                     const res = await fetch("api/books/delete", {
-                        method: 'POST',
+                        method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json'
                         },
